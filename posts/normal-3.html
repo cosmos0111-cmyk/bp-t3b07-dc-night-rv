@@ -1,165 +1,22 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TCP 윈도우 스케일링(Window Scaling) 활성화 시 노후화된 게이트웨이 장비의 패킷 드롭 원인 추적</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Noto+Sans+KR:wght@400;900&display=swap" rel="stylesheet">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background-color: #0d0d0f;
-      color: #ebebeb;
-      font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
-      line-height: 1.6;
-      padding: 32px;
-    }
-    .wrapper {
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 60px;
-    }
-    .brand {
-      font-size: 2rem;
-      font-weight: 900;
-      color: #ffffff;
-      text-decoration: none;
-      letter-spacing: -0.05em;
-    }
-    nav { display: flex; gap: 24px; }
-    nav a {
-      color: #888888;
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-    nav a:hover { color: #f43f5e; }
-    main { margin-bottom: 80px; }
-    .label {
-      font-size: 0.75rem;
-      font-family: monospace;
-      color: #f43f5e;
-      font-weight: bold;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 24px;
-    }
-    h1 {
-      font-size: 3rem;
-      font-weight: 900;
-      line-height: 1.15;
-      letter-spacing: -0.04em;
-      color: #ffffff;
-      margin-bottom: 40px;
-    }
-    .article-body {
-      font-size: 1.15rem;
-      color: #cccccc;
-      font-weight: 400;
-      max-width: 780px;
-    }
-    .article-body p { margin-bottom: 24px; }
-    .juice-link {
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: 900;
-      box-shadow: inset 0 -6px 0 #f43f5e;
-      transition: all 0.15s ease-in-out;
-    }
-    .juice-link:hover {
-      box-shadow: inset 0 -24px 0 #f43f5e;
-      color: #ffffff;
-    }
-    .archive-section {
-      margin-top: 80px;
-    }
-    .section-title {
-      font-size: 1rem;
-      font-family: monospace;
-      color: #888888;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 32px;
-    }
-    .archive-list {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .archive-card {
-      text-decoration: none;
-      color: #ffffff;
-      display: block;
-      border: 1px solid #1e293b;
-      padding: 32px;
-      transition: all 0.2s ease;
-    }
-    .archive-card:hover {
-      border-color: #f43f5e;
-      background-color: #0f172a;
-    }
-    .archive-card h3 {
-      font-size: 1.4rem;
-      font-weight: 900;
-      margin-bottom: 12px;
-      letter-spacing: -0.02em;
-    }
-    .archive-card p {
-      color: #888888;
-      font-size: 0.95rem;
-    }
-    footer {
-      border-top: 1px solid #1e293b;
-      padding-top: 32px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.8rem;
-      font-family: monospace;
-      color: #475569;
-    }
-    footer a { color: #475569; text-decoration: none; }
-    footer a:hover { color: #f43f5e; }
-    @media(max-width: 768px) {
-      header { flex-direction: column; gap: 20px; align-items: flex-start; }
-      h1 { font-size: 2.2rem; }
-      .archive-card { padding: 20px; }
-      .archive-card h3 { font-size: 1.2rem; }
-    }
-  </style>
-  <link rel="canonical" href="https://deungchon-night-review.hardcoreroom.com/posts/normal-3.html">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>등촌 유흥 후기 – 기록 정리 방법 안내</title>
+<link rel="canonical" href="https://deungchon-night-review.hardcoreroom.com/posts/normal-3.html">
+  <meta name="bpaas-link-purpose" content="link-juice">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <meta property="og:url" content="https://deungchon-night-review.hardcoreroom.com/posts/normal-3.html">
+  <meta property="og:title" content="등촌 유흥 후기 – 기록 정리 방법 안내">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
-  <div class="wrapper">
-    <header>
-      <a href="/" class="brand">STREET.KR</a>
-      <nav><a href="../index.html">HOME</a> | <a href="../sitemap.xml">SITEMAP</a></nav>
-    </header>
-    <main>
-      <div class="label">// BRUTALIST GRID SYSTEM</div>
-      <h1>TCP 윈도우 스케일링(Window Scaling) 활성화 시 노후화된 게이트웨이 장비의 패킷 드롭 원인 추적</h1>
-      <div class="article-body">
-        원거리 대용량 데이터 전송 성능을 극대화하는 TCP 윈도우 스케일 팩터 옵션을 커널 수준에서 적용했을 때, 도중에 위치한 오래된 하드웨어 방화벽들이 이를 비정상 버스트 트래픽으로 오인하여 임의로 세션을 끊어버리는 복잡한 병목 현상을 추적하고 해결하는 실무 트러블슈팅 로드맵.
-      </div>
-      
-      
-    </main>
-    <footer>
-      <div>&copy; 2026 STREET.KR. ALL RIGHTS RESERVED.</div>
-      <div>
-        <a href="../sitemap.xml">SITEMAP</a> | 
-        <a href="#">PRIVACY</a> | 
-        <a href="#">DISCLAIMER</a>
-      </div>
-    </footer>
-  </div>
+<h1>등촌 유흥 후기 읽기 전 알아두면 좋은 기록 정리 방법</h1>
+<p>등촌 지역에서 유흥 관련 정보를 찾아보는 사람은 점점 늘고 있습니다. 다양한 게시물이 오가다 보니, 어떤 정보가 믿을 만한지 가리지 않고 읽다가 혼란을 겪는 경우가 적지 않습니다. 이때 필요한 것은 단순히 글을 많이 읽는 것이 아니라, 본인이 확인한 내용을 체계적으로 정리하는 방법입니다. 기록을 남기는 과정 자체가 정보의真伪를 스스로 점검하는 첫걸음이 됩니다.</p>
+<p>기록을 정리할 때 가장 중요한 것은 출처를 함께 적어두는 것입니다. 어떤 게시물을 참고했는지, 언제 확인했는지 기록해두면 나중에 다시 찾아볼 때 시간을 낭비하지 않습니다. 또한 비슷한 주제의 글을 여러 개 읽었을 때 각각의 특징을 간단히 비교해두면, 전체적인 흐름을 파악하는 데 도움이 됩니다. 중요한 것은 한 가지 정보에만 의존하지 않고, 가능한 많은 각도에서 살펴보는 태도입니다.</p>
+<p>초보자에게 추천하는 방법은 노트나 문서 파일 하나를 정해서, 확인한 내용만 간략히 적어가는 것입니다. 너무 자세히 적으려다 보면 오히려 본래 목적을 잃기 쉬우므로, 핵심만 짧게 정리하는 연습이 필요합니다. 중복되는 정보는 하나만 남기고 나머지는 정리하면, 나중에 볼 때 훨씬 깔끔합니다. 이런 습관은등촌 유흥 후기 같은 주제를 다룰 때 특히 유용하게 작용합니다.</p>
+<p>기록 정리를 시작한 후에는 정기적으로 다시 한 번 확인할 기회를 가지는 것이 좋습니다. 시간이 지나면当初 중요하게 생각했던 부분이 왜 그렇게 느껴졌는지 기억이 흐려지기 쉽습니다. 주기적인 점검을 통해 불필요한 정보는 과감히 삭제하고, 남은 내용만 남기면 기록의 질은 자연스럽게 높아집니다. 자세한 방법은 <a class="anchor-link" href="https://clipdesk.shop/" data-bpaas-link-target="t2-clipdesk">기록 정리 방법</a> 에서 확인할 수 있습니다.</p>
 </body>
 </html>
